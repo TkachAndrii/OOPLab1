@@ -1,6 +1,6 @@
-package dao.impl;
+package dao.impl.impl;
 
-import dao.HotelDAO;
+import dao.impl.HotelDAO;
 import model.Hotel;
 import db.DBConnection;
 

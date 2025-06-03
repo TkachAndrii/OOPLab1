@@ -1,5 +1,5 @@
 // src/main/java/dao/UserDAO.java
-package dao;
+package dao.impl;
 
 import model.User;
 

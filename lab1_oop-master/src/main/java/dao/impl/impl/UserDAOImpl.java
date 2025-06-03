@@ -1,7 +1,7 @@
 // src/main/java/dao/impl/UserDAOImpl.java
-package dao.impl;
+package dao.impl.impl;
 
-import dao.UserDAO;
+import dao.impl.UserDAO;
 import model.User;
 import db.DBConnection;
 

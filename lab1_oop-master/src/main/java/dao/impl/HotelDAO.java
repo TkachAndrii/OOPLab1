@@ -1,4 +1,4 @@
-package dao;
+package dao.impl;
 
 import model.Hotel;
 import java.util.List;

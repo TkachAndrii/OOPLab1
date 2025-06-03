@@ -1,5 +1,8 @@
-package dao;
+package dao.impl;
 
+import dao.impl.impl.HotelDAOImpl;
+import dao.impl.impl.UserDAOImpl;
+import db.DBConnection;
 import model.User;
 import org.junit.jupiter.api.*;
 import java.sql.*;
@@ -10,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserDAOImplTest {
 
     private static Connection h2Connection;
-    private UserDAOImpl userDAO;
+    private static UserDAOImpl userDAO;
 
     @BeforeAll
     static void setupInMemoryDB() throws Exception {
-        h2Connection = DriverManager.getConnection("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
+        h2Connection = DBConnection.getConnection();
         try (Statement stmt = h2Connection.createStatement()) {
             stmt.executeUpdate("""
                 CREATE TABLE users (
@@ -27,16 +30,7 @@ public class UserDAOImplTest {
                 )
             """);
         }
-    }
-
-    @BeforeEach
-    void initDAO() {
-        userDAO = new UserDAOImpl() {
-            @Override
-            protected Connection getConnection() throws SQLException {
-                return h2Connection;
-            }
-        };
+        userDAO = new UserDAOImpl();
     }
 
     @AfterEach

@@ -1,5 +1,8 @@
-package dao;
+package dao.impl;
 
+import dao.impl.impl.HotelDAOImpl;
+import dao.impl.impl.PurchaseDAOImpl;
+import db.DBConnection;
 import model.Purchase;
 import org.junit.jupiter.api.*;
 import java.math.BigDecimal;
@@ -10,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PurchaseDAOImplTest {
 
     private static Connection h2Connection;
-    private PurchaseDAOImpl purchaseDAO;
+    private static PurchaseDAOImpl purchaseDAO;
 
     @BeforeAll
     static void setupInMemoryDB() throws Exception {
-        h2Connection = DriverManager.getConnection("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
+        h2Connection = DBConnection.getConnection();
         try (Statement stmt = h2Connection.createStatement()) {
             stmt.executeUpdate("""
                 CREATE TABLE purchases (
@@ -29,17 +32,9 @@ public class PurchaseDAOImplTest {
                 )
             """);
         }
+        purchaseDAO = new PurchaseDAOImpl();
     }
 
-    @BeforeEach
-    void initDAO() {
-        purchaseDAO = new PurchaseDAOImpl() {
-            @Override
-            protected Connection getConnection() throws SQLException {
-                return h2Connection;
-            }
-        };
-    }
 
     @AfterEach
     void cleanTable() throws SQLException {

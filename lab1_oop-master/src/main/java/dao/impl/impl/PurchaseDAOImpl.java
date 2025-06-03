@@ -1,6 +1,6 @@
-package dao.impl;
+package dao.impl.impl;
 
-import dao.PurchaseDAO;
+import dao.impl.PurchaseDAO;
 import db.DBConnection;
 import model.Purchase;
 

@@ -1,5 +1,7 @@
-package dao;
+package dao.impl;
 
+import dao.impl.impl.HotelDAOImpl;
+import db.DBConnection;
 import model.Hotel;
 import org.junit.jupiter.api.*;
 import java.math.BigDecimal;
@@ -10,11 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class HotelDAOImplTest {
 
     private static Connection connection;
-    private HotelDAOImpl hotelDAO;
+    private static HotelDAOImpl hotelDAO;
 
     @BeforeAll
     static void setupDB() throws Exception {
-        connection = DriverManager.getConnection("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
+        connection = DBConnection.getConnection();
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate("""
                 CREATE TABLE hotels (
@@ -26,18 +28,11 @@ public class HotelDAOImplTest {
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
             """);
+
         }
+        hotelDAO = new HotelDAOImpl();
     }
 
-    @BeforeEach
-    void setUp() {
-        hotelDAO = new HotelDAOImpl() {
-            @Override
-            protected Connection getConnection() throws SQLException {
-                return connection;
-            }
-        };
-    }
 
     @AfterEach
     void cleanUp() throws SQLException {
